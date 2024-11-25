@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TenistasDetailsFrag">
+
+    <ImageView
+        android:id="@+id/imageTenistaDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/TenistaNamesDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/imageTenistaDetails"
+        app:layout_constraintHorizontal_bias="0.429"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageTenistaDetails" />
+
+    <TextView
+        android:id="@+id/TenistaAgeDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/TenistaNamesDetails"
+        app:layout_constraintStart_toStartOf="@+id/TenistaNamesDetails"
+        app:layout_constraintTop_toBottomOf="@+id/TenistaNamesDetails" />
+
+    <TextView
+        android:id="@+id/TenistaGrandSlamsDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="76dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.011"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/imageTenistaDetails" />
+
+    <TextView
+        android:id="@+id/TenistasDateDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/TenistaGrandSlamsDetails"
+        app:layout_constraintStart_toStartOf="@+id/TenistaGrandSlamsDetails"
+        app:layout_constraintTop_toBottomOf="@+id/TenistaGrandSlamsDetails" />
+</androidx.constraintlayout.widget.ConstraintLayout>
