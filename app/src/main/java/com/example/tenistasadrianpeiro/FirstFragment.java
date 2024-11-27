@@ -1,21 +1,22 @@
-package com.example.tenistasadrianpeiro ;
+package com.example.tenistasadrianpeiro;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.example.tenistasadrianpeiro.R;
-import com.example.tenistasadrianpeiro.Tenista;
-import com.example.tenistasadrianpeiro.TenistaAPI;
-import com.example.tenistasadrianpeiro.TenistaAdapter;
 import com.example.tenistasadrianpeiro.databinding.FragmentFirstBinding;
 
 import java.util.ArrayList;
@@ -25,99 +26,83 @@ import java.util.concurrent.Executors;
 public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
-    ArrayList<Tenista> tenistas;
-    ArrayAdapter<Tenista> adapter;
+    private ArrayAdapter<Tenista> adapter;
+    private TenistaViewModel model;
 
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
+        binding = FragmentFirstBinding.inflate(inflater);
+        View view = binding.getRoot();
 
-        binding = FragmentFirstBinding.inflate(inflater, container, false);
-
-        tenistas = new ArrayList<>();
-        setHasOptionsMenu(true);
-        return binding.getRoot();
-
-
-
-    }
-
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-
-        tenistas = new ArrayList<>();
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            ArrayList<Tenista> pokemons = TenistaAPI.buscar();
-
-            getActivity().runOnUiThread(() -> {
-                for (Tenista p : pokemons) {
-                    tenistas.add(p);
-                }
-                adapter.notifyDataSetChanged();
-            });
-        });
-
-        adapter = new TenistaAdapter(getContext(),
+        // Configuramos el adaptador para que nos salga la imagen y el nombre al inicio
+        ArrayList<Tenista> tenistas = new ArrayList<>();
+        adapter = new TenistaAdapter(
+                getContext(),
                 R.layout.tenistas_list_item,
-                tenistas);
+                tenistas
+        );
         binding.listTenistas.setAdapter(adapter);
 
+        // Configuramos para cuando le damos click a un tenista nos
+        // salga toda la informacion que le damos o mas bien hemos puesto
+        binding.listTenistas.setOnItemClickListener((adapterView, view1, i, l) -> {
+            Tenista tenista = adapter.getItem(i);
+            Bundle args = new Bundle();
+            args.putSerializable("Tenista", tenista);
+            NavHostFragment.findNavController(FirstFragment.this)
+                    .navigate(R.id.action_FirstFragment_to_tenistaDetails, args);
+        });
 
-        binding.listTenistas.setOnItemClickListener((adapter, fragment, i, l) -> {
-                    Tenista capital = (Tenista) adapter.getItemAtPosition(i);
-                    Bundle args = new Bundle();
-                    args.putSerializable("Tenista", capital);
+        // Configuraramos el ViewModel
+        model = new ViewModelProvider(this).get(TenistaViewModel.class);
+        model.getTenistas().observe(getViewLifecycleOwner(), tenistasList -> {
+            adapter.clear();
+            adapter.addAll(tenistasList);
+        });
 
-                    NavHostFragment.findNavController(FirstFragment.this)
-                            .navigate(R.id.action_FirstFragment_to_tenistasDetailsFrag, args);
-                }
-        );
-
+        return view;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true); // Esto sirve para habilitar el menu de opciones
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_main, menu); // Inflar menú principal
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.REFRESH){
+        if (id == R.id.REFRESH) {
+            Toast.makeText(getContext(), "Se esta haciendo", Toast.LENGTH_SHORT).show();
+            Log.d("XXX", "CLICKK!!!");
             refresh();
+
+        } else if (id == R.id.settings) {
+            Intent intent = new Intent(getContext(), SettingsActivity.class);
+            startActivity(intent);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    private void refresh() {
+        model.reload(); // Recargargamos los  datos desde el ViewModel
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-
-    void refresh() {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            ArrayList<Tenista> pokemons = TenistaAPI.buscar();
-
-            getActivity().runOnUiThread(() -> {
-                for (Tenista p : pokemons) {
-                    Log.d("XXX", p.toString());
-                    pokemons.add(p);
-                }
-                adapter.notifyDataSetChanged();
-            });
-        });
-
-
-        binding.listTenistas.setOnItemClickListener((adapterView, fragment, i, l) -> {
-            Tenista capital = adapter.getItem(i);
-            Bundle args = new Bundle();
-            args.putSerializable("Capital", capital);
-            Log.d("XXX", capital.toString());
-        });
     }
 }

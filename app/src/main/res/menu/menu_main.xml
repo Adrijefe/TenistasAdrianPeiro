@@ -4,11 +4,12 @@
     tools:context="com.example.tenistasadrianpeiro.MainActivity">
     <item
         android:id="@+id/REFRESH"
-        android:orderInCategory="102"
-        android:title="Refresh" />
+        android:orderInCategory="103"
+        android:title="Refresh"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="103"
+        android:orderInCategory="104"
         android:title="@string/action_settings"
         app:showAsAction="never" />
 </menu>

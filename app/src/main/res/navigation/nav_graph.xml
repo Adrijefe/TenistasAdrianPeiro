@@ -11,12 +11,17 @@
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first">
         <action
-            android:id="@+id/action_FirstFragment_to_tenistasDetailsFrag"
-            app:destination="@id/tenistasDetailsFrag" />
+            android:id="@+id/action_FirstFragment_to_tenistaDetails"
+            app:destination="@id/tenistaDetails" />
     </fragment>
     <fragment
         android:id="@+id/tenistasDetailsFrag"
         android:name="com.example.tenistasadrianpeiro.TenistasDetailsFrag"
         android:label="fragment_tenistas_details2"
         tools:layout="@layout/fragment_tenistas_details2" />
+    <fragment
+        android:id="@+id/tenistaDetails"
+        android:name="com.example.tenistasadrianpeiro.TenistaDetails"
+        android:label="fragment_tenista_details"
+        tools:layout="@layout/fragment_tenista_details" />
 </navigation>

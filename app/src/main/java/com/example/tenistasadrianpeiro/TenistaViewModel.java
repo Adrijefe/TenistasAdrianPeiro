@@ -3,6 +3,7 @@ package com.example.tenistasadrianpeiro;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -46,7 +47,7 @@ public class TenistaViewModel extends AndroidViewModel {
 
             result = api.buscar();
 
-
+            Log.d("XXX", result.toString());
             tenistaDAO.deleteTenistas();
             tenistaDAO.addTenistas(result);
 

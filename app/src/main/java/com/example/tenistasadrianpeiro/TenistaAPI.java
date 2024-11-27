@@ -28,6 +28,8 @@ public class TenistaAPI {
 
     @OptIn(markerClass = UnstableApi.class) public static ArrayList<Tenista> buscar() {
         ArrayList<Tenista> tenistas = new ArrayList<>();
+        //Realizamos  una solicitud HTTP para obtener una lista de tenistas en formato JSON,
+        // la procesa y devuelve una lista de objetos Tenista
         try {
             String response = HttpUtils.get("https://yaohroqydkqtavmsbohg.supabase.co/rest/v1/Tenistas?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlhb2hyb3F5ZGtxdGF2bXNib2hnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE2NjIwMzEsImV4cCI6MjA0NzIzODAzMX0.U7kZF008-AJaZd0ebkbiy2m5M4KzacxerFHalvewUks");
             //JSONObject jsonObject = new JSONObject(response);
@@ -61,6 +63,8 @@ public class TenistaAPI {
     }
 
     private String doCall (String url){
+
+        // Realizamos una solicitud HTTP a la URL
         try{
             String JsonResponse = HttpUtils.get(url);
             return JsonResponse;
