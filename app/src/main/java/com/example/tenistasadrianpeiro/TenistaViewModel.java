@@ -22,15 +22,17 @@ public class TenistaViewModel extends AndroidViewModel {
 
         this.app = app;
         this.baseDatos = BaseDatos.getDatabase(this.getApplication());
+        // Inicializa el DAO para acceder a los datos de la entidad Tenista.
         this.tenistaDAO = baseDatos.getTenistaDao();
     }
 
-
+    // Retorna una lista  de tenistas desde la base de datos.
     public LiveData<List<Tenista>> getTenistas() {
         return tenistaDAO.getTenistas();
     }
 
     public void reload() {
+        // Recargamos los datos desde la API
         RefreshDataTask task = new RefreshDataTask();
         task.execute();
     }
@@ -38,16 +40,18 @@ public class TenistaViewModel extends AndroidViewModel {
         @Override
         protected Void doInBackground(Void... voids) {
 
+            // Creo que no se utiliza
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(
                     app.getApplicationContext()
             );
 
+            //Llamamos a la API para obtener una lista de tenistas
             TenistaAPI api = new TenistaAPI();
             ArrayList<Tenista> result;
-
             result = api.buscar();
 
             Log.d("XXX", result.toString());
+            //Eliminamos los datos existentes y luego añadimos los nuevos datos de la API en la base de dato
             tenistaDAO.deleteTenistas();
             tenistaDAO.addTenistas(result);
 

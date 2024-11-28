@@ -37,7 +37,7 @@ public class FirstFragment extends Fragment {
         binding = FragmentFirstBinding.inflate(inflater);
         View view = binding.getRoot();
 
-        // Configuramos el adaptador para que nos salga la imagen y el nombre al inicio
+        // Configuramos el adaptador para que nos salga la imagen y el nombre al inicio que esta en TenistaApter
         ArrayList<Tenista> tenistas = new ArrayList<>();
         adapter = new TenistaAdapter(
                 getContext(),
@@ -57,9 +57,13 @@ public class FirstFragment extends Fragment {
         });
 
         // Configuraramos el ViewModel
+        //Crea o recupera la instancia del viewModel asociado a TenistaViewModel
         model = new ViewModelProvider(this).get(TenistaViewModel.class);
+        //Mira el LiveData de la lista de los tenistas, que esta en ViewModel que nos permite actualizar
         model.getTenistas().observe(getViewLifecycleOwner(), tenistasList -> {
+            //Limpiamos el adapter
             adapter.clear();
+            // Y agregamos los elementos de la lista de tenistas al adapter
             adapter.addAll(tenistasList);
         });
 
@@ -83,11 +87,13 @@ public class FirstFragment extends Fragment {
         int id = item.getItemId();
 
         if (id == R.id.REFRESH) {
-            Toast.makeText(getContext(), "Se esta haciendo", Toast.LENGTH_SHORT).show();
+            //Muestra el mensaje de que se esta realizando la accion refresh
+            Toast.makeText(getContext(), "Se esta refrescando, calma", Toast.LENGTH_SHORT).show();
             Log.d("XXX", "CLICKK!!!");
             refresh();
 
         } else if (id == R.id.settings) {
+            //proporciona el contexto actual del fragmento o actividad.
             Intent intent = new Intent(getContext(), SettingsActivity.class);
             startActivity(intent);
             return true;

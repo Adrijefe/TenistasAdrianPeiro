@@ -28,8 +28,9 @@ public class TenistaAPI {
 
     @OptIn(markerClass = UnstableApi.class) public static ArrayList<Tenista> buscar() {
         ArrayList<Tenista> tenistas = new ArrayList<>();
-        //Realizamos  una solicitud HTTP para obtener una lista de tenistas en formato JSON,
-        // la procesa y devuelve una lista de objetos Tenista
+        //Realizamos  una solicitud  para obtener una lista de tenistas en formato JSON,
+        // la procesamos y devuelve una lista de objetos Tenista con todo lo que hay dentro,
+        // si no seguimos el mismo nombre tal cual esta en el json no funcionaria
         try {
             String response = HttpUtils.get("https://yaohroqydkqtavmsbohg.supabase.co/rest/v1/Tenistas?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlhb2hyb3F5ZGtxdGF2bXNib2hnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE2NjIwMzEsImV4cCI6MjA0NzIzODAzMX0.U7kZF008-AJaZd0ebkbiy2m5M4KzacxerFHalvewUks");
             //JSONObject jsonObject = new JSONObject(response);
@@ -38,8 +39,6 @@ public class TenistaAPI {
 
             for (int i = 0; i < resultado.length(); i++) {
                 JSONObject tenistaObj = resultado.getJSONObject(i);
-                String name = tenistaObj.getString("nombre");
-
                 Integer id = tenistaObj.getInt("id");
                 String nombre = tenistaObj.getString("nombre");
                 Integer age = tenistaObj.getInt("edad");

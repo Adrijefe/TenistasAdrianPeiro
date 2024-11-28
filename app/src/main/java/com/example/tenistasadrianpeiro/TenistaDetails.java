@@ -46,12 +46,15 @@ public class TenistaDetails extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        // Obtenemos los argumentos pasados al fragmento
         Bundle args = getArguments();
-
         if (args != null) {
+            // Recuperamos el objeto Tenista serializado.
             Tenista tenista = (Tenista) args.getSerializable("Tenista");
+
             if (tenista != null) {
                 Log.d("XXX", tenista.toString());
+                //Actualiza con los datos del Tenista
                 updateApi(tenista);
             }
 
@@ -61,10 +64,15 @@ public class TenistaDetails extends Fragment {
 
     private void updateApi(Tenista tenista) {
         Log.d("Tenista", tenista.toString());
+        // Actualiza el TextView con el nombre del tenista.
         binding.TenistaNameDetails.setText("Nombre: " + tenista.getName().toString());
+        // Actualiza el TextView la edad del tenista.
         binding.TenistaAgeDetail.setText("Edad : " + tenista.getAge());
+        // Actualiza el TextView los grand Slams del tenista.
         binding.TenistaGrandSlamDetails.setText("Grand Slams: " + tenista.getGrandSlams());
+        // Actualiza el TextView el nacimiento del tenista.
         binding.TenistasDateDetail.setText("Nacimiento : "+tenista.getDate());
+        //Usamos el glide para coger y cargar la imagen del tenista
         Glide.with(getContext()).load(tenista.getSprite()).into(binding.imgTenistaDetails);
     }
 
