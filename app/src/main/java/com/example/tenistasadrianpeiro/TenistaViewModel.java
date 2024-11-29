@@ -49,9 +49,9 @@ public class TenistaViewModel extends AndroidViewModel {
             TenistaAPI api = new TenistaAPI();
             ArrayList<Tenista> result;
             result = api.buscar();
-
+            //Hacemos el Log para que veamos que nos funciona en el logCat
             Log.d("XXX", result.toString());
-            //Eliminamos los datos existentes y luego añadimos los nuevos datos de la API en la base de dato
+            //Eliminamos los datos existentes y luego añadimos los nuevos datos de la API en la base de datos
             tenistaDAO.deleteTenistas();
             tenistaDAO.addTenistas(result);
 

@@ -37,7 +37,7 @@ public class FirstFragment extends Fragment {
         binding = FragmentFirstBinding.inflate(inflater);
         View view = binding.getRoot();
 
-        // Configuramos el adaptador para que nos salga la imagen y el nombre al inicio que esta en TenistaApter
+        // Configuramos el adaptador para que nos salga la imagen y el nombre al inicio,-ñ que esta en TenistaApter
         ArrayList<Tenista> tenistas = new ArrayList<>();
         adapter = new TenistaAdapter(
                 getContext(),

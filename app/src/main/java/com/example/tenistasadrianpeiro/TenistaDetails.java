@@ -49,7 +49,7 @@ public class TenistaDetails extends Fragment {
         // Obtenemos los argumentos pasados al fragmento
         Bundle args = getArguments();
         if (args != null) {
-            // Recuperamos el objeto Tenista serializado.
+            // Esto el objeto Tenista serializado.
             Tenista tenista = (Tenista) args.getSerializable("Tenista");
 
             if (tenista != null) {
